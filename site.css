@@ -119,14 +119,14 @@ a.store-badge:active { transform: scale(0.98); }
 .hero-visual { position: relative; max-width: 520px; width: 100%; margin: 0 auto; }
 .hero-photo {
   position: relative; border-radius: 32px; overflow: hidden;
-  aspect-ratio: 4 / 5; margin-left: 16%;
+  aspect-ratio: 4 / 5; margin-right: 16%;
   box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
 }
 .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 45% 70%; }
 .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 13, 18, 0) 55%, rgba(11, 13, 18, 0.55)); }
-.hero-visual .phone { position: absolute; left: 0; bottom: -10%; width: 46%; transform: rotate(-5deg); }
+.hero-visual .phone { position: absolute; right: 0; bottom: -10%; width: 46%; transform: rotate(5deg); }
 .float-chip {
-  position: absolute; right: -6px; top: 8%;
+  position: absolute; left: -6px; top: 8%;
   display: flex; align-items: center; gap: 10px;
   padding: 10px 16px 10px 10px; border-radius: 16px;
   background: rgba(21, 25, 34, 0.88); border: 1px solid var(--line-2);
@@ -247,6 +247,24 @@ section { scroll-margin-top: 72px; }
 .final-card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; opacity: 0.8; }
 .final-card::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11, 13, 18, 0.05), rgba(11, 13, 18, 0.94) 80%); }
 .final-card .inner { position: relative; z-index: 2; max-width: 580px; }
+/* phone: photo on top, text below — so the text never sits on top of the child */
+@media (max-width: 799px) {
+  .final-card { display: block; padding: 0; min-height: 0; background: var(--bg-2); }
+  .final-card > img { position: relative; inset: auto; height: 300px; opacity: 1; object-position: 50% 62%;
+    -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
+  .final-card::before { display: none; }
+  .final-card .inner { padding: 4px 24px 32px; }
+}
+/* desktop: the photo is a small original (665 px wide) — show it as a sharp portrait panel on the right
+   instead of stretching it full-bleed, and fade it into the card */
+@media (min-width: 800px) {
+  .final-card { background: var(--bg-2); align-items: center; }
+  .final-card > img {
+    left: auto; right: 0; width: 42%; opacity: 1; object-position: 50% 60%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 38%); mask-image: linear-gradient(90deg, transparent, #000 38%);
+  }
+  .final-card::before { background: radial-gradient(120% 90% at 0% 50%, rgba(255, 107, 44, 0.10), transparent 60%); }
+}
 .final-card h2 { font-size: clamp(32px, 4.6vw, 54px); }
 .final-card p { margin-top: 14px; color: #d4d6da; font-size: 18px; }
 
